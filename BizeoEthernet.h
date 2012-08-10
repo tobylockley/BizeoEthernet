@@ -1,3 +1,9 @@
+/* Bizeo-Ethernet library for Arduino
+ * Author: Toby Lockley
+ * (c) Copyright 2012 Direct Marketing Software Pty. Ltd.
+ * All rights reserved.
+ */
+ 
 #ifndef __BIZEO_H
 #define __BIZEO_H
 
@@ -36,3 +42,5 @@ public:
 extern BizeoClass Bizeo;
 
 #endif  // __BIZEO_H
+
+/* (c) Copyright 2012 Direct Marketing Software Pty. Ltd. */

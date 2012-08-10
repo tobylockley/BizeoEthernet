@@ -109,3 +109,6 @@ int pub_updateKpi(String kpiGuid, int value)
 #
 # These behave exactly the same as their similar functions above,
 # but just use the public web service calls in their implementation.
+
+
+/* (c) Copyright 2012 Direct Marketing Software Pty. Ltd. */

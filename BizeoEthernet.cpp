@@ -1,3 +1,9 @@
+/* Bizeo-Ethernet library for Arduino
+ * Author: Toby Lockley
+ * (c) Copyright 2012 Direct Marketing Software Pty. Ltd.
+ * All rights reserved.
+ */
+
 #include "BizeoEthernet.h"
 
 #define BIZEO_WS_DOMAIN "bizeocloudws.cloudapp.net"
@@ -325,3 +331,5 @@ String BizeoClass::parseXML(String searchStr)
 }
 
 BizeoClass Bizeo;
+
+/* (c) Copyright 2012 Direct Marketing Software Pty. Ltd. */

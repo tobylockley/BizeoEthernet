@@ -45,8 +45,7 @@ int BizeoClass::getStatus(String userGuid)
      */
 
     bool success = false;
-    int length = 340;  // Constant length without GUID
-    length += userGuid.length();
+    
     if (_debugLevel >= 1) Serial.print(F("Connecting..."));
 
     // Attempt to connect
@@ -55,12 +54,11 @@ int BizeoClass::getStatus(String userGuid)
 
         while (_client.available()) _client.read();  // Flush any data on the client stream
 
-        sendSoapHeader(length);
-        _client.print(F("<GetMonitorStatus xmlns=\"http://tempuri.org/\"><MasterTaskID>"));
+        _client.print(F("GET /PublicWS.asmx/GetMonitorStatus?MasterTaskID="));
         _client.print(userGuid);
-        _client.print(F("</MasterTaskID></GetMonitorStatus></soap:Body></soap:Envelope>"));
+        _client.print(F(" HTTP/1.1\nHost: bizeocloudws.cloudapp.net\n\n"));
         
-        String result = parseXML("GetMonitorStatusResult");
+        String result = parseXML("int");
         _client.stop();
         
         if (result == "0") {
@@ -108,8 +106,7 @@ int BizeoClass::updateKpi(String kpiGuid, int kpiValue)
      */
 
     bool success = false;
-    int length = 347;  // Constant length without GUID
-    length += kpiGuid.length() + String(kpiValue).length();
+    
     if (_debugLevel >= 1) Serial.print(F("Connecting..."));
 
     // Attempt to connect
@@ -117,15 +114,14 @@ int BizeoClass::updateKpi(String kpiGuid, int kpiValue)
         if (_debugLevel >= 1) Serial.print(F("Success..."));
 
         while (_client.available()) _client.read();  // Flush any data on the client stream
-        
-        sendSoapHeader(length);
-        _client.print(F("<UpdateExternalKPI xmlns=\"http://tempuri.org/\"><taskId>"));
+
+        _client.print(F("GET /PublicWS.asmx/UpdateExternalKPI?taskId="));
         _client.print(kpiGuid);
-        _client.print(F("</taskId><result>"));
+        _client.print(F("&result="));
         _client.print(kpiValue);
-        _client.print(F("</result></UpdateExternalKPI></soap:Body></soap:Envelope>"));
+        _client.print(F(" HTTP/1.1\nHost: bizeocloudws.cloudapp.net\n\n"));
         
-        String result = parseXML("UpdateExternalKPIResult");
+        String result = parseXML("int");
         _client.stop();
         
         if (result == "0") {
@@ -154,7 +150,7 @@ int BizeoClass::updateKpi(String kpiGuid, int kpiValue)
     }
 }
 
-int BizeoClass::pub_getStatus(String userGuid)
+int BizeoClass::post_getStatus(String userGuid)
 {
 // POST /PublicWS.asmx/GetMonitorStatus HTTP/1.1
 // Host: bizeocloudws.cloudapp.net
@@ -164,7 +160,7 @@ int BizeoClass::pub_getStatus(String userGuid)
 // MasterTaskID=string
 }
 
-int BizeoClass::pub_updateKpi(String kpiGuid, int kpiValue)
+int BizeoClass::post_updateKpi(String kpiGuid, int kpiValue)
 {
     /*
      * Invokes Bizeo public web service to update an external KPI.
@@ -228,6 +224,122 @@ int BizeoClass::pub_updateKpi(String kpiGuid, int kpiValue)
     }
 }
 
+int BizeoClass::soap_getStatus(String userGuid)
+{
+    /*
+     * Invokes Bizeo web service to retrieve current Bizeo status.
+     */
+
+    bool success = false;
+    int length = 340;  // Constant length without GUID
+    length += userGuid.length();
+    if (_debugLevel >= 1) Serial.print(F("Connecting..."));
+
+    // Attempt to connect
+    if (_client.connect(BIZEO_WS_DOMAIN, 80)) {
+        if (_debugLevel >= 1) Serial.print(F("success..."));
+
+        while (_client.available()) _client.read();  // Flush any data on the client stream
+
+        sendSoapHeader(length);
+        _client.print(F("<GetMonitorStatus xmlns=\"http://tempuri.org/\"><MasterTaskID>"));
+        _client.print(userGuid);
+        _client.print(F("</MasterTaskID></GetMonitorStatus></soap:Body></soap:Envelope>"));
+        
+        String result = parseXML("GetMonitorStatusResult");
+        _client.stop();
+        
+        if (result == "0") {
+            // Everything's OK
+            if (_debugLevel >= 1) Serial.println(F("Status: GREEN"));
+            return 0;
+        }
+        else if (result == "1")
+        {
+            // Warning
+            if (_debugLevel >= 1) Serial.println(F("Status: YELLOW"));
+            return 1;
+        }
+        else if (result == "2")
+        {
+            // Something's wrong!
+            if (_debugLevel >= 1) Serial.println(F("Status: RED"));
+            return 2;
+        }
+        else if (result == "-2")
+        {
+            // Invalid GUID
+            if (_debugLevel >= 1) Serial.println(F("Error: Invalid GUID"));
+            return -2;
+        }
+        else
+        {
+            // Unkown error
+            if (_debugLevel >= 1) Serial.println(F("Error: Unkown"));
+            return -3;
+        }
+    }
+    else {
+        // Something wrong with internet connection
+        if (_debugLevel >= 1) Serial.println(F("Failed to make a connection"));
+        _client.stop();
+        return -1;
+    }
+}
+
+int BizeoClass::soap_updateKpi(String kpiGuid, int kpiValue)
+{
+    /* SOAP request.
+     * Invokes Bizeo web service to update an external KPI.
+     */
+
+    bool success = false;
+    int length = 347;  // Constant length without GUID
+    length += kpiGuid.length() + String(kpiValue).length();
+    if (_debugLevel >= 1) Serial.print(F("Connecting..."));
+
+    // Attempt to connect
+    if (_client.connect(BIZEO_WS_DOMAIN, 80)) {
+        if (_debugLevel >= 1) Serial.print(F("Success..."));
+
+        while (_client.available()) _client.read();  // Flush any data on the client stream
+        
+        sendSoapHeader(length);
+        _client.print(F("<UpdateExternalKPI xmlns=\"http://tempuri.org/\"><taskId>"));
+        _client.print(kpiGuid);
+        _client.print(F("</taskId><result>"));
+        _client.print(kpiValue);
+        _client.print(F("</result></UpdateExternalKPI></soap:Body></soap:Envelope>"));
+        
+        String result = parseXML("UpdateExternalKPIResult");
+        _client.stop();
+        
+        if (result == "0") {
+            // Success
+            if (_debugLevel >= 1) Serial.println(F("KPI updated"));
+            return 0;
+        }
+        else if (result == "1")
+        {
+            // Fail
+            if (_debugLevel >= 1) Serial.println(F("Failed, check KPI GUID"));
+            return -2;
+        }
+        else
+        {
+            // Unknown error
+            if (_debugLevel >= 1) Serial.println(F("Error: Unexpected server response"));
+            return -3;
+        }
+    }
+    else {
+        // Something wrong with internet connection
+        if (_debugLevel >= 1) Serial.println(F("Failed to make a connection"));
+        _client.stop();
+        return -1;
+    }
+}
+
 
 /***** PRIVATE METHODS *****/
 
@@ -238,7 +350,7 @@ void BizeoClass::sendSoapHeader(unsigned int content_length)
      * so save code re-entry and space by putting it here
      */
 
-    _client.print(F("POST /service1.asmx HTTP/1.1\n"));
+    _client.print(F("POST /PublicWS.asmx HTTP/1.1\n"));
     _client.print(F("Host: bizeocloudws.cloudapp.net\n"));
     _client.print(F("Content-Length: "));
     _client.println(content_length);

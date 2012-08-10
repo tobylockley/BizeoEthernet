@@ -23,20 +23,22 @@ private:
     void sendSoapHeader(unsigned int content_length);
 
 public:
-    BizeoClass() { _debugLevel = 0; }
+    BizeoClass() { _debugLevel = 2; }
     
     int begin();
     int begin(uint8_t *mac_address);
     void setDebugLevel(unsigned int level);
     
-    // Bizeo web service functions (service1.asmx)
+    // Bizeo web service functions. Default to GET
     int getStatus(String userGuid);
     int updateKpi(String kpiGuid, int value);
 
-    // Bizeo PUBLIC web service functions (PublicWS.asmx)
-    // These are faster, but sometimes the website goes down
-    int pub_getStatus(String userGuid);
-    int pub_updateKpi(String kpiGuid, int value);
+    // Extra web service request methods
+    int post_getStatus(String userGuid);
+    int post_updateKpi(String kpiGuid, int value);
+    
+    int soap_getStatus(String userGuid);
+    int soap_updateKpi(String kpiGuid, int value);
 };
 
 extern BizeoClass Bizeo;

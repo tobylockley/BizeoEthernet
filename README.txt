@@ -8,6 +8,7 @@ Todo
 --------------------------------------------------------------------------------
 - Fully implement public WS, possible remove service1 functionality (not needed)
 - Add variant methods for GET, POST, and SOAP requests
+- Add retries when a failure occurs
 - Create similar library for WiFly
 - Make the readme a little more readable
 

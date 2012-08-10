@@ -160,21 +160,6 @@ int BizeoClass::pub_getStatus(String userGuid)
 
 int BizeoClass::pub_updateKpi(String kpiGuid, int kpiValue)
 {
-//POST /PublicWS.asmx HTTP/1.1
-//Host: bizeocloudws.cloudapp.net
-//Content-Type: text/xml; charset=utf-8
-//Content-Length: length
-//SOAPAction: "http://tempuri.org/UpdateExternalKPI"
-//
-//<?xml version="1.0" encoding="utf-8"?>
-//<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-//  <soap:Body>
-//    <UpdateExternalKPI xmlns="http://tempuri.org/">
-//      <taskId>string</taskId>
-//      <result>double</result>
-//    </UpdateExternalKPI>
-//  </soap:Body>
-//</soap:Envelope>
     /*
      * Invokes Bizeo public web service to update an external KPI.
      */

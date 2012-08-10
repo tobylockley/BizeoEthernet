@@ -4,6 +4,14 @@ Requires an arduino, the arduino IDE (version 1.0 or later), and an
 ethernet shield. Interfaces to the bizeo web services through http calls.
 
 
+Todo
+--------------------------------------------------------------------------------
+- Fully implement public WS, possible remove service1 functionality (not needed)
+- Add variant methods for GET, POST, and SOAP requests
+- Create similar library for WiFly
+- Make the readme a little more readable
+
+
 Installation
 --------------------------------------------------------------------------------
 Copy everything into the folder: "<Arduino-Sketchbook>/libraries/BizeoEthernet"
@@ -31,7 +39,7 @@ running on the arduino at a time.
 
 Following is a listing of the BizeoClass methods:
 
-NOTE: Some return value differs from what is returned by the web service.
+NOTE: Some return values differ from what is returned by the web service.
       This is to provide consistency between the functions and provide
       a more meaningful return value (i.e. less than zero = error).
 

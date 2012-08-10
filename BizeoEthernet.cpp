@@ -158,8 +158,83 @@ int BizeoClass::pub_getStatus(String userGuid)
 // MasterTaskID=string
 }
 
-int BizeoClass::pub_updateKpi(String kpiGuid, int value)
+int BizeoClass::pub_updateKpi(String kpiGuid, int kpiValue)
 {
+//POST /PublicWS.asmx HTTP/1.1
+//Host: bizeocloudws.cloudapp.net
+//Content-Type: text/xml; charset=utf-8
+//Content-Length: length
+//SOAPAction: "http://tempuri.org/UpdateExternalKPI"
+//
+//<?xml version="1.0" encoding="utf-8"?>
+//<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//  <soap:Body>
+//    <UpdateExternalKPI xmlns="http://tempuri.org/">
+//      <taskId>string</taskId>
+//      <result>double</result>
+//    </UpdateExternalKPI>
+//  </soap:Body>
+//</soap:Envelope>
+    /*
+     * Invokes Bizeo public web service to update an external KPI.
+     */
+
+    bool success = false;
+    int length = 347;  // Constant length without GUID
+    length += kpiGuid.length() + String(kpiValue).length();
+    if (_debugLevel >= 1) Serial.print(F("Connecting..."));
+
+    // Attempt to connect
+    if (_client.connect(BIZEO_WS_DOMAIN, 80)) {
+        if (_debugLevel >= 1) Serial.print(F("Success..."));
+
+        while (_client.available()) _client.read();  // Flush any data on the client stream
+        
+        _client.print(F("POST /PublicWS.asmx HTTP/1.1\n"));
+        _client.print(F("Host: bizeocloudws.cloudapp.net\n"));
+        _client.print(F("Content-Length: "));
+        _client.println(length);
+        _client.print(F("Connection: close\n"));
+        _client.print(F("Content-Type: text/xml; charset=utf-8\n\n"));
+
+        _client.print(F("<?xml version=\"1.0\" encoding=\"utf-8\"?>"));
+        _client.print(F("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "));
+        _client.print(F("xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "));
+        _client.print(F("xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"));
+        _client.print(F("<soap:Body>"));
+        _client.print(F("<UpdateExternalKPI xmlns=\"http://tempuri.org/\"><taskId>"));
+        _client.print(kpiGuid);
+        _client.print(F("</taskId><result>"));
+        _client.print(kpiValue);
+        _client.print(F("</result></UpdateExternalKPI></soap:Body></soap:Envelope>"));
+        
+        String result = parseXML("UpdateExternalKPIResult");
+        _client.stop();
+        
+        if (result == "0") {
+            // Success
+            if (_debugLevel >= 1) Serial.println(F("KPI updated"));
+            return 0;
+        }
+        else if (result == "1")
+        {
+            // Fail
+            if (_debugLevel >= 1) Serial.println(F("Failed, check KPI GUID"));
+            return -2;
+        }
+        else
+        {
+            // Unknown error
+            if (_debugLevel >= 1) Serial.println(F("Error: Unexpected server response"));
+            return -3;
+        }
+    }
+    else {
+        // Something wrong with internet connection
+        if (_debugLevel >= 1) Serial.println(F("Failed to make a connection"));
+        _client.stop();
+        return -1;
+    }
 }
 
 

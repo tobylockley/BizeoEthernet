@@ -7,7 +7,6 @@
 #include <WProgram.h>
 #endif
 
-#include <SPI.h>
 #include <Ethernet.h>
 
 class BizeoClass {

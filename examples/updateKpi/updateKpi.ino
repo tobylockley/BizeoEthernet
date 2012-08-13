@@ -3,6 +3,7 @@
 #include <Ethernet.h>
 #include <BizeoEthernet.h>
 
+// This can be retrieved from going to the settings on an external KPI
 const char KPI_GUID[]  = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
 
 byte mac[] = { 

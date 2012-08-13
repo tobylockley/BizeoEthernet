@@ -3,6 +3,7 @@
 #include <Ethernet.h>
 #include <BizeoEthernet.h>
 
+// This can be retrieved from your browser's URL when viewing Bizeo
 const char USER_GUID[]  = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX";
 
 byte mac[] = { 

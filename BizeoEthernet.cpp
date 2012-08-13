@@ -52,20 +52,14 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
 
     unsigned int length = guid.length();  // Used for content length of POST requests
     String response;  // Store the response from the web server, ready for analysis
+    int returnVal = -10;  // This function should never return -10
 
     if (_debugLevel >= 2) Serial.println();  // Make more readable in verbose mode
     if (_debugLevel >= 1) Serial.print(F("Connecting.."));
 
-    if (_client.connected()) {
-        _client.stop();  // Make sure we are not already connected
-        delay(500);
-    }
-
     // Attempt to connect
     if (_client.connect(BIZEO_WS_DOMAIN, 80)) {
         if (_debugLevel >= 1) Serial.print(F("Success.."));
-
-        _client.flush();  // Flush any data on the client stream
 
         // Branch off depending on method argument
         switch (method) {
@@ -101,8 +95,8 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
         case SOAP:
             if (_debugLevel >= 2) Serial.print(F("Using SOAP.."));
 
-            length += 340;  // All characters of XML data (found using notepad++)
-            
+            length += 348;  // All characters of XML data (found using notepad++)
+
             _client.print(F("POST "));
             _client.print(F(BIZEO_WS_URI));
             _client.print(F(" HTTP/1.1\n"));
@@ -110,16 +104,16 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
             _client.print(F("Content-Length: "));
             _client.print(length);
             _client.print(F("\nConnection: close\n"));
-            _client.print(F("Content-Type: text/xml; charset=utf-8\n\n"));
+            _client.print(F("Content-Type: application/soap+xml; charset=utf-8\n\n"));
 
             _client.print(F("<?xml version=\"1.0\" encoding=\"utf-8\"?>"));
-            _client.print(F("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "));
+            _client.print(F("<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "));
             _client.print(F("xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "));
-            _client.print(F("xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"));
-            _client.print(F("<soap:Body>"));
+            _client.print(F("xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"));
+            _client.print(F("<soap12:Body>"));
             _client.print(F("<GetMonitorStatus xmlns=\"http://tempuri.org/\"><MasterTaskID>"));
             _client.print(guid);
-            _client.print(F("</MasterTaskID></GetMonitorStatus></soap:Body></soap:Envelope>"));
+            _client.print(F("</MasterTaskID></GetMonitorStatus></soap12:Body></soap12:Envelope>"));
         
             response = parseXML("GetMonitorStatusResult");
             break;
@@ -127,49 +121,48 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
         default:
             // This shouldn't happen
             if (_debugLevel >= 1) Serial.println(F("Unexpected HTTP_METHOD."));
-            _client.stop();
-            return -3;  // General error code
+            returnVal = -3;  // General error code
         }
-
-        _client.stop();
 
         // Translate response to a usable int value
         if (response == "0") {
             // Everything's OK
             if (_debugLevel >= 1) Serial.println(F("Status: GREEN"));
-            return 0;
+            returnVal = 0;
         }
         else if (response == "1")
         {
             // Warning
             if (_debugLevel >= 1) Serial.println(F("Status: YELLOW"));
-            return 1;
+            returnVal = 1;
         }
         else if (response == "2")
         {
             // Something's wrong!
             if (_debugLevel >= 1) Serial.println(F("Status: RED"));
-            return 2;
+            returnVal = 2;
         }
         else if (response == "-2")
         {
             // Invalid GUID
             if (_debugLevel >= 1) Serial.println(F("Error: Invalid GUID"));
-            return -2;
+            returnVal = -2;
         }
         else
         {
             // Unkown error
             if (_debugLevel >= 1) Serial.println(F("Error: Unexpected server response"));
-            return -3;
+            returnVal = -3;
         }
     }
     else {
         // Something wrong with internet connection
         if (_debugLevel >= 1) Serial.println(F("Failed to make a connection"));
-        _client.stop();
-        return -1;
+        returnVal = -1;
     }
+
+    _client.stop();
+    return returnVal;
 }
 
 int BizeoClass::updateKpi(String guid, int value)
@@ -184,6 +177,7 @@ int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
 
     unsigned int length = guid.length() + String(value).length();  // Used for content length of POST requests
     String response;  // Store the response from the web server, ready for analysis
+    int returnVal = -10;  // This function should never return -10
 
     if (_debugLevel >= 2) Serial.println();  // Make more readable in verbose mode
     if (_debugLevel >= 1) Serial.print(F("Connecting.."));
@@ -239,8 +233,8 @@ int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
         case SOAP:
             if (_debugLevel >= 2) Serial.print(F("Using SOAP.."));
 
-            length += 347;  // All characters of XML data (found using notepad++)
-        
+            length += 355;  // All characters of XML data (found using notepad++)
+
             _client.print(F("POST "));
             _client.print(F(BIZEO_WS_URI));
             _client.print(F(" HTTP/1.1\n"));
@@ -248,18 +242,18 @@ int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
             _client.print(F("Content-Length: "));
             _client.print(length);
             _client.print(F("\nConnection: close\n"));
-            _client.print(F("Content-Type: text/xml; charset=utf-8\n\n"));
+            _client.print(F("Content-Type: application/soap+xml; charset=utf-8\n\n"));
 
             _client.print(F("<?xml version=\"1.0\" encoding=\"utf-8\"?>"));
-            _client.print(F("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "));
+            _client.print(F("<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "));
             _client.print(F("xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "));
-            _client.print(F("xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">"));
-            _client.print(F("<soap:Body>"));
+            _client.print(F("xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"));
+            _client.print(F("<soap12:Body>"));
             _client.print(F("<UpdateExternalKPI xmlns=\"http://tempuri.org/\"><taskId>"));
             _client.print(guid);
             _client.print(F("</taskId><result>"));
             _client.print(value);
-            _client.print(F("</result></UpdateExternalKPI></soap:Body></soap:Envelope>"));
+            _client.print(F("</result></UpdateExternalKPI></soap12:Body></soap12:Envelope>"));
         
             response = parseXML("UpdateExternalKPIResult");
             break;
@@ -267,37 +261,36 @@ int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
         default:
             // This shouldn't happen
             if (_debugLevel >= 1) Serial.println(F("Unexpected HTTP_METHOD."));
-            _client.stop();
-            return -3;  // General error code
+            returnVal = -3;  // General error code
         }
-
-        _client.stop();
 
         // Translate response to a usable int value
         if (response == "0") {
             // Success
             if (_debugLevel >= 1) Serial.println(F("KPI updated"));
-            return 0;
+            returnVal = 0;
         }
         else if (response == "1")
         {
             // Fail
             if (_debugLevel >= 1) Serial.println(F("Failed, check KPI GUID"));
-            return -2;
+            returnVal = -2;
         }
         else
         {
             // Unknown error
             if (_debugLevel >= 1) Serial.println(F("Error: Unexpected server response"));
-            return -3;
+            returnVal = -3;
         }
     }
     else {
         // Something wrong with internet connection
         if (_debugLevel >= 1) Serial.println(F("Failed to make a connection"));
-        _client.stop();
-        return -1;
+        returnVal = -1;
     }
+
+    _client.stop();
+    return returnVal;
 }
 
 

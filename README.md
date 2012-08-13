@@ -5,7 +5,7 @@ Interfaces to the bizeo web services through http calls. Requires an arduino, th
 * Create similar library for WiFly.
 
 # Installation
-Copy everything into the folder: "<Arduino-Sketchbook>/libraries/BizeoEthernet"
+Copy everything into the folder: "*Arduino-Sketchbook*/libraries/BizeoEthernet"
 You may have to create the libraries folder. Default sketchbook location is in:
 
 * Windows: "My Documents\Arduino"
@@ -62,8 +62,10 @@ int begin()
   <dt>Input</dt>
   <dd>None</dd>
   <dt>Output</dt>
-  <dd>* 1 - Succeeded to initialize ethernet shield and obtain IP address
-      * 0 - Failed to initialize ethernet</dd>
+  <dd>
+  * 1 - Succeeded to initialize ethernet shield and obtain IP address
+  * 0 - Failed to initialize ethernet
+  </dd>
 </dl>
 
     int begin(uint8_t *mac_address)
@@ -83,54 +85,49 @@ void setDebugLevel(unsigned int level)
 
 Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the value to report.
 
-#####Input:
+######Input:
 * 0 - No debug output
 * 1 - Light debug messages
 * 2 - Detailed (verbose) debug messages
 
-#####Output:
+######Output:
 None
 
     int getStatus(String userGuid)
 
 When a valid GUID is supplied, will return the current Bizeo status for the corresponding user.
 
-#####Input:
+#####Input
 Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
 
-#####Output:
+#####Output
 Integer value corresponding to bizeo status or error code.
-* 0 = Green
-* 1 = Yellow
-* 2 = Red
+*  0 = Green
+*  1 = Yellow
+*  2 = Red
 * -1 = Connection error
 * -2 = Invalid GUID
-* -3 = Unknown server response
-
+* -3 = Unknown server response  
 
     int updateKpi(String kpiGuid, int value)
 
-|
-| When a valid KPI GUID and value are supplied, the server will attempt to
-| update the database with the new value.
-|
-|  Input: Bizeo external KPI GUID, which can be found by browsing to
-|         an external KPI in your browser, and clicking on settings.
-|
-| Output: Integer value corresponding to success or error code.
-|         0 = Success
-|        -1 = Connection error
-|        -2 = Invalid GUID
-|        -3 = Unknown server response
+
+When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.
+
+Input: Bizeo external KPI GUID, which can be found by browsing to
+         an external KPI in your browser, and clicking on settings.
+
+ Output: Integer value corresponding to success or error code.
+         0 = Success
+       -1 = Connection error
+        -2 = Invalid GUID
+        -3 = Unknown server response
 
 
     int pub_getStatus(String userGuid)
     int pub_updateKpi(String kpiGuid, int value)
 
-
-|
-| These behave exactly the same as their similar functions above,
-| but just use the public web service calls in their implementation.
+These behave exactly the same as their similar functions above, but just use the public web service calls in their implementation.
 
 
 *(c) Copyright 2012 Direct Marketing Software Pty. Ltd.*
@@ -154,6 +151,5 @@ more stuff
 ###### Heading six
 more stuff
 
-####### Heading seven
-more stuff
+(c) &copy; Bizeo 2012
 

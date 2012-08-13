@@ -7,8 +7,9 @@ Interfaces to the bizeo web services through http calls. Requires an arduino, th
 # Installation
 Copy everything into the folder: "<Arduino-Sketchbook>/libraries/BizeoEthernet"
 You may have to create the libraries folder. Default sketchbook location is in:
-"My Documents\Arduino" for Windows
-"~/Documents/Arduino" for Mac
+
+* Windows: "My Documents\Arduino"
+* Mac: "~/Documents/Arduino"
 
 # Usage
 This library takes away all the hassle of working with the Bizeo web services with an arduino. Feel free to browse the source code to see how they are called and parsed. An overview of all the available web services can be found [here](http://bizeocloudws.cloudapp.net/PublicWS.asmx).
@@ -51,22 +52,23 @@ Then, use the Bizeo web calls any time you need them:
 
 **Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.**
 
+````c
+int begin()
+````
 
-    int begin()
+*Initializes the bizeo class and ethernet shield with default MAC address (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00).*
 
-Initializes the bizeo class and ethernet shield with default MAC address (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00).
-
-#####Input:
-None
-
-#####Output:
-* 1 - Succeeded to initialize ethernet shield and obtain IP address
-* 0 - Failed to initialize ethernet
-
+<dl>
+  <dt>Input</dt>
+  <dd>None</dd>
+  <dt>Output</dt>
+  <dd>* 1 - Succeeded to initialize ethernet shield and obtain IP address
+      * 0 - Failed to initialize ethernet</dd>
+</dl>
 
     int begin(uint8_t *mac_address)
 
-Initializes the bizeo class and ethernet shield with specified MAC address.
+**Initializes the bizeo class and ethernet shield with specified MAC address.**
 
 #####Input:
 Array of 6 bytes corresponding to a mac address. E.g. byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 };
@@ -75,8 +77,9 @@ Array of 6 bytes corresponding to a mac address. E.g. byte mac[] = { 0xDE, 0xAD,
 * 1 - Succeeded to initialize ethernet shield and obtain IP address
 * 0 - Failed to initialize ethernet
 
-
-    void setDebugLevel(unsigned int level)
+```c
+void setDebugLevel(unsigned int level)
+```
 
 Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the value to report.
 
@@ -87,7 +90,6 @@ Sets the level of verbosity desired. Currently only values 0, 1, and 2 are imple
 
 #####Output:
 None
-
 
     int getStatus(String userGuid)
 
@@ -106,7 +108,8 @@ Integer value corresponding to bizeo status or error code.
 * -3 = Unknown server response
 
 
-int updateKpi(String kpiGuid, int value)
+    int updateKpi(String kpiGuid, int value)
+
 |
 | When a valid KPI GUID and value are supplied, the server will attempt to
 | update the database with the new value.
@@ -121,8 +124,10 @@ int updateKpi(String kpiGuid, int value)
 |        -3 = Unknown server response
 
 
-int pub_getStatus(String userGuid)
-int pub_updateKpi(String kpiGuid, int value)
+    int pub_getStatus(String userGuid)
+    int pub_updateKpi(String kpiGuid, int value)
+
+
 |
 | These behave exactly the same as their similar functions above,
 | but just use the public web service calls in their implementation.

@@ -49,66 +49,61 @@ Then, use the Bizeo web calls any time you need them:
 
 ## Overview of Functions
 
-**NOTE: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error).**
+**Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.**
+
 
     int begin()
 
-*Initializes the bizeo class and ethernet shield with default MAC address (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00).*
+Initializes the bizeo class and ethernet shield with default MAC address (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00).
 
-<table>
-  <tr>
-    <th>Input</th><th>Output</th>
-  </tr>
-  <tr>
-    <td>None</td><td>* 1 if succeeded to obtain IP address. * 0 if failed.</td>
-  </tr>
-</table>
 #####Input:
 None
 
 #####Output:
-1 if succeeded to obtain IP address, 0 if failed
+* 1 - Succeeded to initialize ethernet shield and obtain IP address
+* 0 - Failed to initialize ethernet
 
 
     int begin(uint8_t *mac_address)
-    |
-    | Initializes the bizeo class and ethernet shield with specified
-    | MAC address.
-    |
-    |  Input: Array of 6 bytes corresponding to a mac address.
-    |         E.g. byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 };
-    |              Bizeo.begin(mac);
-    |
-    | Output: 1 if succeeded to obtain IP address, 0 if failed
+
+Initializes the bizeo class and ethernet shield with specified MAC address.
+
+#####Input:
+Array of 6 bytes corresponding to a mac address. E.g. byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 };
+
+#####Output:
+* 1 - Succeeded to initialize ethernet shield and obtain IP address
+* 0 - Failed to initialize ethernet
 
 
-void setDebugLevel(unsigned int level)
-|
-| Sets the level of verbosity desired. Currently only values 0, 1,
-| and 2 are implemented, but larger values will not cause errors,
-| simply allow debug levels up to and including the value to report.
-|
-|  Input: 0 for no debug output, or a positive integer corresponding to
-|         the level desired. Higher = more detailed information.
-|
-| Output: None
+    void setDebugLevel(unsigned int level)
+
+Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the value to report.
+
+#####Input:
+* 0 - No debug output
+* 1 - Light debug messages
+* 2 - Detailed (verbose) debug messages
+
+#####Output:
+None
 
 
-int getStatus(String userGuid)
-|
-| When a valid GUID is supplied, will return the current Bizeo
-| status for the corresponding user.
-|
-|  Input: Bizeo user GUID, which can be extracted from the url when
-|         browsing to the bizeo status page in a browser.
-|
-| Output: Integer value corresponding to bizeo status or error code.
-|         0 = Green
-|         1 = Yellow
-|         2 = Red
-|        -1 = Connection error
-|        -2 = Invalid GUID
-|        -3 = Unknown server response
+    int getStatus(String userGuid)
+
+When a valid GUID is supplied, will return the current Bizeo status for the corresponding user.
+
+#####Input:
+Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
+
+#####Output:
+Integer value corresponding to bizeo status or error code.
+* 0 = Green
+* 1 = Yellow
+* 2 = Red
+* -1 = Connection error
+* -2 = Invalid GUID
+* -3 = Unknown server response
 
 
 int updateKpi(String kpiGuid, int value)

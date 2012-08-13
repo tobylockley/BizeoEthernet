@@ -75,7 +75,8 @@ int begin()
 **Initializes the bizeo class and ethernet shield with specified MAC address.**
 
 #####Input:
-Array of 6 bytes corresponding to a mac address. E.g. byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 };
+* Pointer to an array of 6 bytes corresponding to a mac address. E.g:  
+  byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 };
 
 #####Output:
 * 1 - Succeeded to initialize ethernet shield and obtain IP address
@@ -104,10 +105,14 @@ Bizeo user GUID, which can be extracted from the url when browsing to the bizeo 
 
 #####*Output*
 Integer value corresponding to bizeo status or error code.
-*  0 = Green
-*  1 = Yellow
-*  2 = Red
-* -1 = Connection error
+* 0 = Green
+    More test.
+*  1 = Yellow  
+    More test with spaces
+* 2 = Red
+  No spaces prev, no spaces in front
+* -1 = Connection error  
+  Two spaces in both places
 * -2 = Invalid GUID
 * -3 = Unknown server response  
 

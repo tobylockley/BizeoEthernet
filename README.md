@@ -52,14 +52,22 @@ Then, use the Bizeo web calls any time you need them:
 **NOTE: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error).**
 
     int begin()
-    
+
+*Initializes the bizeo class and ethernet shield with default MAC address (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00).*
+
+<table>
+  <tr>
+    <th>Input</th><th>Output</th>
+  </tr>
+  <tr>
+    <td>None</td><td>* 1 if succeeded to obtain IP address. * 0 if failed.</td>
+  </tr>
+</table>
 #####Input:
 None
 
 #####Output:
 1 if succeeded to obtain IP address, 0 if failed
-
-Initializes the bizeo class and ethernet shield with default MAC address (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00).
 
 
     int begin(uint8_t *mac_address)
@@ -125,7 +133,7 @@ int pub_updateKpi(String kpiGuid, int value)
 | but just use the public web service calls in their implementation.
 
 
-/* (c) Copyright 2012 Direct Marketing Software Pty. Ltd. */
+*(c) Copyright 2012 Direct Marketing Software Pty. Ltd.*
 
 
 # Heading one

@@ -63,8 +63,10 @@ int begin()
   <dd>None</dd>
   <dt>Output</dt>
   <dd>
-  * 1 - Succeeded to initialize ethernet shield and obtain IP address
-  * 0 - Failed to initialize ethernet
+  * 1 - Succeeded to initialize ethernet shield and obtain IP address  
+  * 0 - Failed to initialize ethernet  
+  3 - testing  
+  4 - more testing  
   </dd>
 </dl>
 
@@ -83,24 +85,24 @@ Array of 6 bytes corresponding to a mac address. E.g. byte mac[] = { 0xDE, 0xAD,
 void setDebugLevel(unsigned int level)
 ```
 
-Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the value to report.
+*Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the value to report.*
 
-######Input:
+######*Input*
 * 0 - No debug output
 * 1 - Light debug messages
 * 2 - Detailed (verbose) debug messages
 
-######Output:
+######*Output*
 None
 
     int getStatus(String userGuid)
 
 When a valid GUID is supplied, will return the current Bizeo status for the corresponding user.
 
-#####Input
+#####*Input*
 Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
 
-#####Output
+#####*Output*
 Integer value corresponding to bizeo status or error code.
 *  0 = Green
 *  1 = Yellow
@@ -112,17 +114,13 @@ Integer value corresponding to bizeo status or error code.
     int updateKpi(String kpiGuid, int value)
 
 
-When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.
-
-Input: Bizeo external KPI GUID, which can be found by browsing to
-         an external KPI in your browser, and clicking on settings.
-
- Output: Integer value corresponding to success or error code.
-         0 = Success
-       -1 = Connection error
-        -2 = Invalid GUID
-        -3 = Unknown server response
-
+When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.  
+Input: Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.  
+Output: Integer value corresponding to success or error code.  
+ 0 = Success  
+-1 = Connection error  
+-2 = Invalid GUID  
+-3 = Unknown server response  
 
     int pub_getStatus(String userGuid)
     int pub_updateKpi(String kpiGuid, int value)
@@ -133,10 +131,12 @@ These behave exactly the same as their similar functions above, but just use the
 *(c) Copyright 2012 Direct Marketing Software Pty. Ltd.*
 
 
-# Heading one
+Alternate Heading one
+=====================
 stuff
 
-## Heading two
+Alternate Heading two
+---------------------
 more stuff
 
 ### Heading three

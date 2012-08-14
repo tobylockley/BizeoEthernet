@@ -52,6 +52,8 @@ Then, use the Bizeo web calls any time you need them:
 
 **Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.**
 
+## begin
+
 ````c
 int begin()
 ````
@@ -63,10 +65,12 @@ int begin()
   <dd>None</dd>
   <dt>Output</dt>
   <dd>
-  * 1 - Succeeded to initialize ethernet shield and obtain IP address  
-  * 0 - Failed to initialize ethernet  
-  3 - testing  
-  4 - more testing  
+<pre>
+  1 = Succeeded to initialize ethernet shield and obtain IP address  
+  0 = Failed to initialize ethernet  
+  3 = testing  
+  4 = more testing  
+</pre>
   </dd>
 </dl>
 
@@ -80,6 +84,7 @@ int begin()
 #####Output:
 * 1 - Succeeded to initialize ethernet shield and obtain IP address
 * 0 - Failed to initialize ethernet
+
 ---
 
 ```c
@@ -94,17 +99,17 @@ void setDebugLevel(unsigned int level)
 * 2 - Detailed (verbose) debug messages
 
 ######*Output*
-None
+* None
 
     int getStatus(String userGuid)
 
 When a valid GUID is supplied, will return the current Bizeo status for the corresponding user.
 
 #####*Input*
-Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
+    Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
 
 #####*Output*
-Integer value corresponding to bizeo status or error code.
+    Integer value corresponding to bizeo status or error code.
 * 0 = Green
 * 1 = Yellow
 * 2 = Red
@@ -124,28 +129,23 @@ int updateKpi(String kpiGuid, int value)
   <dd>Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.</dd>
   <dt>Output</dt>
   <dd> Integer value corresponding to success or error code.
-    <pre>
-     0 = Success
-    -1 = Connection error
-    -2 = Invalid GUID
-    -3 = Unknown server response
-    </pre>
+<pre>
+  0 = Success
+ -1 = Connection error
+ -2 = Invalid GUID
+ -3 = Unknown server response
+</pre>
   </dd>
 </dl>
 
 --------
 
-    int pub_getStatus(String userGuid)
-    int pub_updateKpi(String kpiGuid, int value)
 
-These behave exactly the same as their similar functions above, but just use the public web service calls in their implementation.
-
-
-Alternate Heading one
+Heading one
 =====================
 stuff
 
-Alternate Heading two
+Heading two
 ---------------------
 more stuff
 

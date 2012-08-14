@@ -75,12 +75,12 @@ int begin()
 **Initializes the bizeo class and ethernet shield with specified MAC address.**
 
 #####Input:
-* Pointer to an array of 6 bytes corresponding to a mac address. E.g:  
-  byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 };
+* Pointer to an array of 6 bytes corresponding to a mac address, e.g. `byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 };`
 
 #####Output:
 * 1 - Succeeded to initialize ethernet shield and obtain IP address
 * 0 - Failed to initialize ethernet
+---
 
 ```c
 void setDebugLevel(unsigned int level)
@@ -112,22 +112,28 @@ Integer value corresponding to bizeo status or error code.
 * -2 = Invalid GUID
 * -3 = Unknown server response  
 
+--------
 
-    int updateKpi(String kpiGuid, int value)
+```c
+int updateKpi(String kpiGuid, int value)
+```
 
+*When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.*
+<dl>
+  <dt>Input</dt>
+  <dd>Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.</dd>
+  <dt>Output</dt>
+  <dd> Integer value corresponding to success or error code.
+    <pre>
+     0 = Success
+    -1 = Connection error
+    -2 = Invalid GUID
+    -3 = Unknown server response
+    </pre>
+  </dd>
+</dl>
 
-<pre>
-When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.
-</pre>
-<pre>
-Input: Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.  
-</pre>
-Output: Integer value corresponding to success or error code.  
-<pre>
- 0 = Success  
--1 = Connection error  
--2 = Invalid GUID  
--3 = Unknown server response</pre>  
+--------
 
     int pub_getStatus(String userGuid)
     int pub_updateKpi(String kpiGuid, int value)

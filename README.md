@@ -170,31 +170,18 @@ When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which 
 * ``-1``  --  Connection error
 * ``-2``  --  Invalid GUID
 * ``-3``  --  Unknown server response
-<br><br>
 
---------------------------------
+There is a variant available which allows the user to specify which HTTP request method to use. GET is the fastest, but POST and SOAP are implemented as well, in case GET requests are ever disabled in the future (they are sometimes less secure). The alternate function looks like this:
 
 ````c
 int updateKpi(HTTP_METHOD method, String kpiGuid, int value)
 ````
-E.g: ``e.g. Bizeo.updateKpi(POST, myKpiGuid, kpiValue);``
 
-Update a Bizeo external KPI, using the HTTP request method specified. GET is the fastest, but POST and SOAP are implemented as well. This may be useful if GET requests are ever disabled on the server in the future (they are sometimes less secure). Example usage:
-
-````c
-Bizeo.updateKpi(POST, myKpiGuid, kpiValue);
-````
-
-##### Input
-* ``method  ``  --  Which HTTP request method to use for this web service call. Valid arguments are:
-    * ``GET``
-    * ``POST``
-    * ``SOAP``
-* ``kpiGuid``  --  See above
-* ``value``  --  See above
-
-##### Output
-&nbsp;&nbsp;See above
+The extra parameter ``method`` is a custom enum (defined in the header file) representing the HTTP request method to use.  
+Valid arguments are:
+* ``GET``
+* ``POST``
+* ``SOAP``
 <br><br>
 
 --------------------------------

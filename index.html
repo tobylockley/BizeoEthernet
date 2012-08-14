@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="BizeoEthernet for Arduino : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>BizeoEthernet for Arduino</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/tobylockley/BizeoEthernet">View on GitHub</a>
+
+          <h1 id="project_title">BizeoEthernet for Arduino</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/tobylockley/BizeoEthernet/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/tobylockley/BizeoEthernet/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h5>Interfaces to the <a href="http://bizeo.com.au/">Bizeo</a> web services via simple HTTP calls. Requires an arduino, the arduino IDE (version 1.0 or later), and an ethernet shield.</h5>
+
+<p>This library takes away all the hassle of working with the Bizeo web services with an arduino by tacking on to the built-in Ethernet library. Feel free to browse the source code to see how they are called and parsed. An overview of all the available web services can be found <a href="http://bizeocloudws.cloudapp.net/PublicWS.asmx">here</a>.</p>
+
+<p>This library implements all available HTTP methods (GET, POST and SOAP). If the web service functions are called without specifying which method to use, the GET method is used. This is because it sends and receives the least amount of data, so can speed up web interaction.</p>
+
+<p>You cannot use this library and the equivalent BizeoWiFly library at the same time. You can use other ethernet clients, but the Bizeo library declares one on creation, so there will only be 3 available for general use.</p>
+
+<h2>Todo</h2>
+
+<ul>
+<li>Create similar library for WiFly.</li>
+<li>Include example code for internet retries and error checking.</li>
+</ul><h2>Installation</h2>
+
+<p>Download the library as a zip (button above). Copy the folder in the zip to your arduino libraries folder <em><strong>"...ArduinoSketchbook/libraries/"</strong></em> and rename to <em><strong>BizeoEthernet</strong></em>.
+You may have to create the libraries folder. Sketchbook location can be found in the arduino IDE preferences. Examples:</p>
+
+<ul>
+<li>Windows: "My Documents\Arduino\libraries\BizeoEthernet*&lt;source_files&gt;*"</li>
+<li>Mac: "~/Documents/Arduino/libraries/BizeoEthernet/<em>&lt;source_files&gt;</em>"</li>
+</ul><h2>Usage</h2>
+
+<p>First, you must include all relevant library files:</p>
+
+<pre><code>#include &lt;SPI.h&gt;
+#include &lt;Ethernet.h&gt;
+#include &lt;BizeoEthernet.h&gt;
+</code></pre>
+
+<p>Then, call Bizeo.begin in the setup function:</p>
+
+<div class="highlight"><pre><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Bizeo</span><span class="p">.</span><span class="n">begin</span><span class="p">())</span> <span class="p">{</span>  <span class="c1">// Uses default MAC - DE:AD:BE:EF:FE:00</span>
+      <span class="c1">// Handle failure</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>If more than one arduino is being used on the network, specify separate MAC addresses with:</p>
+
+<div class="highlight"><pre><span class="n">byte</span> <span class="n">mac_address</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0xDE</span><span class="p">,</span> <span class="mh">0xAD</span><span class="p">,</span> <span class="mh">0xBE</span><span class="p">,</span> <span class="mh">0xEF</span><span class="p">,</span> <span class="mh">0xFE</span><span class="p">,</span> <span class="mh">0x01</span> <span class="p">};</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Bizeo</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac_address</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// Handle failure</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Then, use the Bizeo web calls any time you need them:</p>
+
+<div class="highlight"><pre><span class="kt">int</span> <span class="n">status</span> <span class="o">=</span> <span class="n">Bizeo</span><span class="p">.</span><span class="n">getStatus</span><span class="p">(</span><span class="n">user_guid</span><span class="p">);</span>
+<span class="c1">// Do something with status</span>
+
+<span class="kt">int</span> <span class="n">update</span> <span class="o">=</span> <span class="n">Bizeo</span><span class="p">.</span><span class="n">updateKpi</span><span class="p">(</span><span class="n">kpi_guid</span><span class="p">,</span> <span class="n">new_value</span><span class="p">);</span>
+<span class="c1">// Check the output to make sure it worked</span>
+</pre></div>
+
+<p>Occasionally, the internet requests may fail. This can be due to an unplugged wire, an ISP malfunction, or even a server error. It is a good idea to always check the output of the web service functions to make sure they succeeded, and handle the errors when they don't (retry, give a warning, etc).</p>
+
+<p>Full examples can be seen in <strong>File &gt; Examples &gt; BizeoEthernet</strong>.</p>
+
+<h2>Overview of Functions</h2>
+
+<h6>Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value within the arduino environment.</h6>
+
+<hr><div class="highlight"><pre><span class="kt">int</span> <span class="n">begin</span><span class="p">()</span>
+<span class="kt">int</span> <span class="n">begin</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">mac_address</span><span class="p">)</span>
+</pre></div>
+
+<p>Initializes the Bizeo library and ethernet shield. When no MAC address is given, it will use the default of <code>DE:AD:BE:EF:FE:00</code>.</p>
+
+<h5><em>Input</em></h5>
+
+<ul>
+<li>
+<code>mac_address</code>  --  Pointer to an array of 6 bytes respresenting a mac address (see <a href="https://github.com/tobylockley/BizeoEthernet#usage">usage</a>)</li>
+</ul><h5><em>Output</em></h5>
+
+<ul>
+<li>
+<code>1</code>  --  Succeeded to initialize ethernet shield and obtain IP address</li>
+<li>
+<code>0</code>  --  Failed to initialize ethernet
+<br><br>
+</li>
+</ul><hr><div class="highlight"><pre><span class="kt">void</span> <span class="n">setDebugLevel</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">level</span><span class="p">)</span>
+</pre></div>
+
+<p>Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the given value.</p>
+
+<h5><em>Input</em></h5>
+
+<ul>
+<li>
+<code>level</code> -- Desired verbosity level
+
+<ul>
+<li>
+<code>0</code>  --  No debug output</li>
+<li>
+<code>1</code>  --  Light debug messages</li>
+<li>
+<code>2</code>  --  Detailed (verbose) debug messages</li>
+</ul>
+</li>
+</ul><h5><em>Output</em></h5>
+
+<ul>
+<li>
+<code>void</code>  --  No output
+<br><br>
+</li>
+</ul><hr><div class="highlight"><pre><span class="kt">int</span> <span class="n">getStatus</span><span class="p">(</span><span class="n">String</span> <span class="n">userGuid</span><span class="p">)</span>
+<span class="kt">int</span> <span class="n">getStatus</span><span class="p">(</span><span class="n">HTTP_METHOD</span> <span class="n">method</span><span class="p">,</span> <span class="n">String</span> <span class="n">userGuid</span><span class="p">)</span>
+</pre></div>
+
+<p>When a valid user GUID is supplied, will return the current Bizeo status for that user. The optional <code>method</code> parameter is a custom enum (defined in the header file) representing the HTTP request method to use. When no method is given, the default of HTTP GET is used. This option is provided in case GET requests are ever disabled in the future and an alternate method needs to be used.</p>
+
+<h5>Input</h5>
+
+<ul>
+<li>
+<code>userGuid</code>  --  Bizeo user GUID, which can be extracted from the url when browsing to the Bizeo status page in a browser</li>
+<li>
+<code>method</code>  --  HTTP request method to use for this web service call. Valid arguments are:
+
+<ul>
+<li><code>GET</code></li>
+<li><code>POST</code></li>
+<li><code>SOAP</code></li>
+</ul>
+</li>
+</ul><h5>Output</h5>
+
+<ul>
+<li> <code>0</code>  --  Green</li>
+<li> <code>1</code>  --  Yellow</li>
+<li> <code>2</code>  --  Red</li>
+<li>
+<code>-1</code>  --  Connection error</li>
+<li>
+<code>-2</code>  --  Invalid GUID</li>
+<li>
+<code>-3</code>  --  Unknown server response
+<br><br>
+</li>
+</ul><hr><div class="highlight"><pre><span class="kt">int</span> <span class="n">updateKpi</span><span class="p">(</span><span class="n">String</span> <span class="n">kpiGuid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+<span class="kt">int</span> <span class="n">updateKpi</span><span class="p">(</span><span class="n">HTTP_METHOD</span> <span class="n">method</span><span class="p">,</span> <span class="n">String</span> <span class="n">kpiGuid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+
+<p>When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which will attempt to update the KPI with the new value. Like the <code>getStatus()</code> function, there is an optional <code>method</code> parameter. When no method is given, the default of HTTP GET is used.</p>
+
+<h5>Input</h5>
+
+<ul>
+<li>
+<code>kpiGuid</code>  --  Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings</li>
+<li>
+<code>value</code>  --  New KPI value</li>
+<li>
+<code>method</code>  --  HTTP request method to use for this web service call. Valid arguments are:
+
+<ul>
+<li><code>GET</code></li>
+<li><code>POST</code></li>
+<li><code>SOAP</code></li>
+</ul>
+</li>
+</ul><h5>Output</h5>
+
+<ul>
+<li> <code>0</code>  --  Success</li>
+<li>
+<code>-1</code>  --  Connection error</li>
+<li>
+<code>-2</code>  --  Invalid GUID</li>
+<li>
+<code>-3</code>  --  Unknown server response
+<br><br>
+</li>
+</ul><hr><p><em>© 2012 Direct Marketing Software Pty Ltd. All rights reserved.</em></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">BizeoEthernet for Arduino maintained by <a href="https://github.com/tobylockley">tobylockley</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

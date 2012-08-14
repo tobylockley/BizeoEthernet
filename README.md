@@ -70,7 +70,7 @@ int begin()
 Initializes the bizeo class and ethernet shield with default MAC address (DE:AD:BE:EF:FE:00).
 
 ##### *Input*
-&nbsp;  None
+&nbsp; None
 ##### *Output*
 * &nbsp;1 -- Succeeded to initialize ethernet shield and obtain IP address
 * &nbsp;0 -- Failed to initialize ethernet
@@ -85,11 +85,11 @@ int begin(uint8_t *mac_address)
 Initializes the bizeo class and ethernet shield with specified MAC address.
 
 ##### *Input*
-* &nbsp;mac_address -- Pointer to an array of 6 bytes corresponding to a mac address
+* &nbsp;mac_address  --  Pointer to an array of 6 bytes respresenting a mac address
 
 ##### *Output*
-* &nbsp;1 - Succeeded to initialize ethernet shield and obtain IP address
-* &nbsp;0 - Failed to initialize ethernet
+* &nbsp;1  --  Succeeded to initialize ethernet shield and obtain IP address
+* &nbsp;0  --  Failed to initialize ethernet
 <br><br>
 
 --------------------------------
@@ -101,13 +101,13 @@ void setDebugLevel(unsigned int level)
 Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the given value.
 
 ##### *Input*
-* &nbsp;Desired verbosity level
-    * &nbsp;0  -  No debug output
-    * &nbsp;1  -  Light debug messages
-* &nbsp;2  -  Detailed (verbose) debug messages
+* &nbsp;level -- Desired verbosity level
+    * &nbsp;0  --  No debug output
+    * &nbsp;1  --  Light debug messages
+    * &nbsp;2  --  Detailed (verbose) debug messages
 
 ##### *Output*
-* None
+&nbsp; None
 <br><br>
 
 --------------------------------
@@ -116,13 +116,12 @@ Sets the level of verbosity desired. Currently only values 0, 1, and 2 are imple
 int getStatus(String userGuid)
 ````
 
-When a valid GUID is supplied, will return the current Bizeo status for the corresponding user.
+When a valid user GUID is supplied, will return the current Bizeo status for that user.
 
 ##### *Input*
-&nbsp; Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
+* &nbsp;userGuid  --  Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser
 
 ##### *Output*
-&nbsp; Integer value corresponding to bizeo status or error code.
 * &nbsp;0  --  Green
 * &nbsp;1  --  Yellow
 * &nbsp;2  --  Red
@@ -140,14 +139,14 @@ int updateKpi(String kpiGuid, int value)
 When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which will attempt to update the KPI with the new value.
 
 ##### *Input*
-&nbsp; Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.</dd>
+* &nbsp;kpiGuid  --  Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings
+* &nbsp;value  --  Integer value to update the external KPI to
 
 ##### *Output*
-&nbsp; Integer value corresponding to success or error code.
-* &nbsp;0 - Success
-* -1 - Connection error
-* -2 - Invalid GUID
-* -3 - Unknown server response
+* &nbsp;0  --  Success
+* -1  --  Connection error
+* -2  --  Invalid GUID
+* -3  --  Unknown server response
 <br><br>
 
 --------------------------------

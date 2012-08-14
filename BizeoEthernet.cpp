@@ -54,16 +54,16 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
     int returnVal = -10;  // This function should never return -10
 
     if (_debugLevel >= 2) Serial.println();  // Make more readable in verbose mode
-    if (_debugLevel >= 1) Serial.print(F("Connecting.."));
+    if (_debugLevel >= 1) Serial.print(F("Connecting..."));
 
     // Attempt to connect
     if (_client.connect(BIZEO_WS_DOMAIN, 80)) {
-        if (_debugLevel >= 1) Serial.print(F("Success.."));
+        if (_debugLevel >= 1) Serial.print(F("Success..."));
 
         // Branch off depending on method argument
         switch (method) {
         case GET:
-            if (_debugLevel >= 2) Serial.print(F("Using GET.."));
+            if (_debugLevel >= 2) Serial.print(F("Using GET..."));
 
             _client.print(F("GET /PublicWS.asmx/GetMonitorStatus?MasterTaskID="));
             _client.print(guid);
@@ -73,7 +73,7 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
             break;
 
         case POST:
-            if (_debugLevel >= 2) Serial.print(F("Using POST.."));
+            if (_debugLevel >= 2) Serial.print(F("Using POST..."));
 
             length += 13;  // "MasterTaskID="
 
@@ -92,7 +92,7 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
             break;
 
         case SOAP:
-            if (_debugLevel >= 2) Serial.print(F("Using SOAP.."));
+            if (_debugLevel >= 2) Serial.print(F("Using SOAP..."));
 
             length += 348;  // All characters of XML data (found using notepad++)
 
@@ -179,16 +179,16 @@ int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
     int returnVal = -10;  // This function should never return -10
 
     if (_debugLevel >= 2) Serial.println();  // Make more readable in verbose mode
-    if (_debugLevel >= 1) Serial.print(F("Connecting.."));
+    if (_debugLevel >= 1) Serial.print(F("Connecting..."));
 
     // Attempt to connect
     if (_client.connect(BIZEO_WS_DOMAIN, 80)) {
-        if (_debugLevel >= 1) Serial.print(F("Success.."));
+        if (_debugLevel >= 1) Serial.print(F("Success..."));
 
         // Branch off depending on method argument
         switch (method) {
         case GET:
-            if (_debugLevel >= 2) Serial.print(F("Using GET.."));
+            if (_debugLevel >= 2) Serial.print(F("Using GET..."));
             
             _client.print(F("GET "));
             _client.print(F(BIZEO_WS_URI));
@@ -202,7 +202,7 @@ int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
             break;
 
         case POST:
-            if (_debugLevel >= 2) Serial.print(F("Using POST.."));
+            if (_debugLevel >= 2) Serial.print(F("Using POST..."));
 
             length += 15;  // "taskId=&result="
 
@@ -223,7 +223,7 @@ int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
             break;
 
         case SOAP:
-            if (_debugLevel >= 2) Serial.print(F("Using SOAP.."));
+            if (_debugLevel >= 2) Serial.print(F("Using SOAP..."));
 
             length += 355;  // All characters of XML data (found using notepad++)
 

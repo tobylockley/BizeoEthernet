@@ -1,5 +1,5 @@
 # BizeoEthernet Library
-###### *Interfaces to the Bizeo web services via simple HTTP calls. Requires an arduino, the arduino IDE (version 1.0 or later), and an ethernet shield.*
+##### *Interfaces to the Bizeo web services via simple HTTP calls. Requires an arduino, the arduino IDE (version 1.0 or later), and an ethernet shield.*
 
 This library takes away all the hassle of working with the Bizeo web services with an arduino. Feel free to browse the source code to see how they are called and parsed. An overview of all the available web services can be found [here](http://bizeocloudws.cloudapp.net/PublicWS.asmx).
 
@@ -61,7 +61,7 @@ Occasionally, the internet requests may fail. This can be due to an unplugged wi
 
 ## Overview of Functions
 
-###### *Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.*
+###### Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.
 
 --------------------------------
 
@@ -72,10 +72,11 @@ int begin()
 Initializes the Bizeo class and ethernet shield with default MAC address (DE:AD:BE:EF:FE:00).
 
 ##### *Input*
-* &nbsp; None
+&nbsp; None
+
 ##### *Output*
-* &nbsp;1 -- Succeeded to initialize ethernet shield and obtain IP address
-* &nbsp;0 -- Failed to initialize ethernet
+* &nbsp;``1`` -- Succeeded to initialize ethernet shield and obtain IP address
+* &nbsp;``0`` -- Failed to initialize ethernet
 <br><br>
 
 --------------------------------
@@ -87,11 +88,11 @@ int begin(uint8_t *mac_address)
 Initializes the Bizeo class and ethernet shield with specified MAC address.
 
 ##### *Input*
-* &nbsp;mac_address  --  Pointer to an array of 6 bytes respresenting a mac address
+* &nbsp;``mac_address``  --  Pointer to an array of 6 bytes respresenting a mac address
 
 ##### *Output*
-* &nbsp;1  --  Succeeded to initialize ethernet shield and obtain IP address
-* &nbsp;0  --  Failed to initialize ethernet
+* &nbsp;``1``  --  Succeeded to initialize ethernet shield and obtain IP address
+* &nbsp;``0``  --  Failed to initialize ethernet
 <br><br>
 
 --------------------------------
@@ -103,13 +104,13 @@ void setDebugLevel(unsigned int level)
 Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the given value.
 
 ##### *Input*
-* &nbsp;level -- Desired verbosity level
-    * &nbsp;0  --  No debug output
-    * &nbsp;1  --  Light debug messages
-    * &nbsp;2  --  Detailed (verbose) debug messages
+* &nbsp;``level`` -- Desired verbosity level
+    * &nbsp;``0``  --  No debug output
+    * &nbsp;``1``  --  Light debug messages
+    * &nbsp;``2``  --  Detailed (verbose) debug messages
 
 ##### *Output*
-&nbsp; None
+&nbsp;&nbsp;None
 <br><br>
 
 --------------------------------
@@ -121,15 +122,15 @@ int getStatus(String userGuid)
 When a valid user GUID is supplied, will return the current Bizeo status for that user. This function uses the default of HTTP GET request to consume the web service.
 
 ##### Input
-* &nbsp;userGuid  --  Bizeo user GUID, which can be extracted from the url when browsing to the Bizeo status page in a browser
+* &nbsp;``userGuid``  -  Bizeo user GUID, which can be extracted from the url when browsing to the Bizeo status page in a browser
 
 ##### Output
-* &nbsp;0  --  Green
-* &nbsp;1  --  Yellow
-* &nbsp;2  --  Red
-* -1  --  Connection error
-* -2  --  Invalid GUID
-* -3  --  Unknown server response
+* &nbsp;``0``  -  Green
+* &nbsp;``1``  -  Yellow
+* &nbsp;`` 2``  -  Red
+* ``-1``  -  Connection error
+* ``-2``  -  Invalid GUID
+* ``-3``  -  Unknown server response
 <br><br>
 
 --------------------------------
@@ -146,13 +147,13 @@ Exactly the same as ``getStatus`` above, but the user can specify which HTTP req
 
 ##### Input
 * &nbsp;``userGuid``  --  See above
-* &nbsp;``method``  --  Which HTTP request method to use for this web service call. Valid arguments are:
+* &nbsp;``method  ``  --  Which HTTP request method to use for this web service call. Valid arguments are:
     * &nbsp;``GET``
     * &nbsp;``POST``
     * &nbsp;``SOAP``
 
 ##### Output
-* &nbsp;See above
+&nbsp;&nbsp;See above
 <br><br>
 
 --------------------------------
@@ -168,8 +169,8 @@ When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which 
 * &nbsp;``value``  --  Integer value to update the external KPI to
 
 ##### Output
-* &nbsp;0  --  Success
-* -1  --  Connection error
+* `` 0``  --  Success
+* ``-1``  --  Connection error
 * -2  --  Invalid GUID
 * -3  --  Unknown server response
 <br><br>

@@ -1,5 +1,5 @@
 # BizeoEthernet Library
-##### Interfaces to the Bizeo web services via simple HTTP calls. Requires an arduino, the arduino IDE (version 1.0 or later), and an ethernet shield.
+##### Interfaces to the [Bizeo](http://bizeo.com.au/) web services via simple HTTP calls. Requires an arduino, the arduino IDE (version 1.0 or later), and an ethernet shield.
 
 This library takes away all the hassle of working with the Bizeo web services with an arduino by tacking on to the built-in Ethernet library. Feel free to browse the source code to see how they are called and parsed. An overview of all the available web services can be found [here](http://bizeocloudws.cloudapp.net/PublicWS.asmx).
 
@@ -12,11 +12,11 @@ You cannot use this library and the equivalent BizeoWiFly library at the same ti
 * Include example code for internet retries and error checking.
 
 ## Installation
-Download the library as a zip (button above). Copy the folder inside the zip to your arduino libraries folder: "*<strong>...ArduinoSketchbook/libraries/</strong>*"
-You may have to create the libraries folder. Sketchbook location is set in the arduino IDE preferences. Default sketchbook locations are:
+Download the library as a zip (button above). Copy the folder in the zip to your arduino libraries folder *<strong>"...ArduinoSketchbook/libraries/"</strong>* and rename to *<strong>BizeoEthernet</strong>*.
+You may have to create the libraries folder. Sketchbook location can be found in the arduino IDE preferences. Examples:
 
-* Windows: "My Documents\Arduino"
-* Mac: "~/Documents/Arduino"
+* Windows: "My Documents\Arduino\libraries\BizeoEthernet\*\<source_files\>*"
+* Mac: "~/Documents/Arduino/libraries/BizeoEthernet/*\<source_files\>*"
 
 ## Usage
 First, you must include all relevant library files:
@@ -73,10 +73,9 @@ int begin()
 int begin(uint8_t *mac_address)
 ````
 
-Initializes the Bizeo library and ethernet shield. When no argument is given, it will use the default MAC address of ``DE:AD:BE:EF:FE:00``.
+Initializes the Bizeo library and ethernet shield. When no MAC address is given, it will use the default of ``DE:AD:BE:EF:FE:00``.
 
 ##### *Input*
-* ``NULL``  --  No argument
 * ``mac_address``  --  Pointer to an array of 6 bytes respresenting a mac address (see [usage](https://github.com/tobylockley/BizeoEthernet#usage))
 
 ##### *Output*
@@ -145,7 +144,7 @@ When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which 
     * ``SOAP``
 
 ##### Output
-* &nbsp;``  0``  --  Success
+* &nbsp;``0``  --  Success
 * ``-1``  --  Connection error
 * ``-2``  --  Invalid GUID
 * ``-3``  --  Unknown server response

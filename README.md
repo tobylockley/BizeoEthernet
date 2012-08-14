@@ -103,9 +103,9 @@ int begin(uint8_t *mac_address)
 
 --------------------------------
 
-```c
+````c
 void setDebugLevel(unsigned int level)
-```
+````
 
 *Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the given value.*
 
@@ -121,9 +121,9 @@ void setDebugLevel(unsigned int level)
 
 --------------------------------
 
-```c
+````c
 int getStatus(String userGuid)
-```
+````
 
 When a valid GUID is supplied, will return the current Bizeo status for the corresponding user.
 
@@ -138,13 +138,13 @@ When a valid GUID is supplied, will return the current Bizeo status for the corr
 * -1 -> Connection error
 * -2 -> Invalid GUID
 * -3 -> Unknown server response
-  
+<br>
 
 --------------------------------
 
-```c
+````c
 int updateKpi(String kpiGuid, int value)
-```
+````
 
 *When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.*
 <dl>
@@ -158,27 +158,6 @@ int updateKpi(String kpiGuid, int value)
 * -3 > Unknown server response
 
 --------------------------------
-
-
-Heading one
-=====================
-stuff
-
-Heading two
----------------------
-more stuff
-
-### Heading three
-more stuff
-
-#### Heading four
-more stuff
-
-##### Heading five
-more stuff
-
-###### Heading six
-more stuff
 
 *&copy; Copyright 2012 Direct Marketing Software Pty. Ltd.*
 

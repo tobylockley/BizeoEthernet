@@ -106,34 +106,33 @@ Bizeo user GUID, which can be extracted from the url when browsing to the bizeo 
 #####*Output*
 Integer value corresponding to bizeo status or error code.
 * 0 = Green
-    More test.
-*  1 = Yellow  
-    More test with spaces
+* 1 = Yellow
 * 2 = Red
-  No spaces prev, no spaces in front
-* -1 = Connection error  
-  Two spaces in both places
+* -1 = Connection error
 * -2 = Invalid GUID
 * -3 = Unknown server response  
+
 
     int updateKpi(String kpiGuid, int value)
 
 
-When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.  
+<pre>
+When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.
+</pre>
+<pre>
 Input: Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.  
+</pre>
 Output: Integer value corresponding to success or error code.  
+<pre>
  0 = Success  
 -1 = Connection error  
 -2 = Invalid GUID  
--3 = Unknown server response  
+-3 = Unknown server response</pre>  
 
     int pub_getStatus(String userGuid)
     int pub_updateKpi(String kpiGuid, int value)
 
 These behave exactly the same as their similar functions above, but just use the public web service calls in their implementation.
-
-
-*(c) Copyright 2012 Direct Marketing Software Pty. Ltd.*
 
 
 Alternate Heading one
@@ -156,5 +155,5 @@ more stuff
 ###### Heading six
 more stuff
 
-(c) &copy; Bizeo 2012
+*&copy; Copyright 2012 Direct Marketing Software Pty. Ltd.*
 

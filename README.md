@@ -145,7 +145,7 @@ When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which 
     * ``SOAP``
 
 ##### Output
-* &nbsp;``\ 0``  --  Success
+* &nbsp;``  0``  --  Success
 * ``-1``  --  Connection error
 * ``-2``  --  Invalid GUID
 * ``-3``  --  Unknown server response
@@ -153,5 +153,5 @@ When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which 
 
 --------------------------------
 
-*&copy; Copyright 2012 Direct Marketing Software Pty. Ltd.*
+*&copy; 2012 Direct Marketing Software Pty Ltd. All rights reserved.*
 

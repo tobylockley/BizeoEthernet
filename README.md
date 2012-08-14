@@ -8,8 +8,8 @@ Interfaces to the bizeo web services through http calls. Requires an arduino, th
 Copy everything into the folder: "*Arduino-Sketchbook*/libraries/BizeoEthernet"
 You may have to create the libraries folder. Default sketchbook location is in:
 
-* Windows: `` My Documents\Arduino ``
-* Mac: `` ~/Documents/Arduino ``
+* Windows: "My Documents\Arduino"
+* Mac: "~/Documents/Arduino"
 
 # Usage
 This library takes away all the hassle of working with the Bizeo web services with an arduino. Feel free to browse the source code to see how they are called and parsed. An overview of all the available web services can be found [here](http://bizeocloudws.cloudapp.net/PublicWS.asmx).
@@ -21,40 +21,40 @@ You cannot use this library and a WiFly at the same time (althought I don't know
 ## Basic usage
 First, you must include all relevant library files:
 
-```c
+````
 #include <SPI.h>
 #include <Ethernet.h>
 #include <BizeoEthernet.h>
-```
+````
 
 Then, call Bizeo.begin in the setup function. Default MAC address is (DE:AD:BE:EF:FE:01):
 
-```c
+````c
 void setup()
 {
     if (!Bizeo.begin()) {
       // Handle failure
     }
 }
-```
+````
 
 If more than one arduino are being used on the network, specify  MAC address with:
 
-```c
-byte mac_address[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x02 };
+````c
+<span class="kt">byte</span> mac_address[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x02 };
 
 if (!Bizeo.begin(mac_address)) {
     // Handle failure
 }
-```
+````
 
 Then, use the Bizeo web calls any time you need them:
 
-```c
+````c
 int status = Bizeo.getStatus(user_guid);
     // Do something with status
 Bizeo.updateKpi(kpi_guid, new_value);
-```
+````
 
 ## Overview of Functions
 
@@ -62,18 +62,17 @@ Bizeo.updateKpi(kpi_guid, new_value);
 
 --------------------------------
 
-```c
+````c
 int begin()
 int begin(uint8_t *mac_address)
-```
+````
 
-*Initializes the bizeo class and ethernet shield with default MAC address ``c (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00) ``.*
+*Initializes the bizeo class and ethernet shield with default MAC address (DE:AD:BE:EF:FE:00).*
 
 <dl>
   <dt>Input</dt>
   <dd>
-  None - Uses default MAC address (0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x00)
-  
+  None
   </dd>
   <dt>Output</dt>
   <dd>
@@ -88,12 +87,14 @@ int begin(uint8_t *mac_address)
 
 --------------------------------
 
-    int begin(uint8_t *mac_address)
+````c
+int begin(uint8_t *mac_address)
+````
 
-**Initializes the bizeo class and ethernet shield with specified MAC address.**
+*Initializes the bizeo class and ethernet shield with specified MAC address.*
 
 #####Input:
-* Pointer to an array of 6 bytes corresponding to a mac address, e.g. ```c byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 }; ```
+* Pointer to an array of 6 bytes corresponding to a mac address, e.g: `` byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 }; ``
 
 #####Output:
 * 1 - Succeeded to initialize ethernet shield and obtain IP address
@@ -101,13 +102,11 @@ int begin(uint8_t *mac_address)
 
 --------------------------------
 
-### setDebugLevel
-
 ```c
 void setDebugLevel(unsigned int level)
 ```
 
-*Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the value to report.*
+*Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the given value.*
 
 ######*Input*
 * 0 - No debug output
@@ -125,14 +124,14 @@ int getStatus(String userGuid)
 
 When a valid GUID is supplied, will return the current Bizeo status for the corresponding user.
 
-#####*Input*
-   Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
+######*Input*
+&nbsp; Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
 
-#####*Output*
-   Integer value corresponding to bizeo status or error code.
-* 0 = Green
-* 1 = Yellow
-* 2 = Red
+######*Output*
+&nbsp; &nbsp; Integer value corresponding to bizeo status or error code.
+* &nbsp;0 = Green
+* &nbsp;1 = Yellow
+* &nbsp;2 = Red
 * -1 = Connection error
 * -2 = Invalid GUID
 * -3 = Unknown server response  
@@ -149,8 +148,7 @@ int updateKpi(String kpiGuid, int value)
   <dd>Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.</dd>
   <dt>Output</dt>
   <dd>
-  Integer value corresponding to success or error code.  
-  
+  Integer value corresponding to success or error code.
 <pre>
   0 = Success
  -1 = Connection error

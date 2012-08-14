@@ -1,7 +1,7 @@
 # BizeoEthernet Library
 ##### Interfaces to the Bizeo web services via simple HTTP calls. Requires an arduino, the arduino IDE (version 1.0 or later), and an ethernet shield.
 
-This library takes away all the hassle of working with the Bizeo web services with an arduino. Feel free to browse the source code to see how they are called and parsed. An overview of all the available web services can be found [here](http://bizeocloudws.cloudapp.net/PublicWS.asmx).
+This library takes away all the hassle of working with the Bizeo web services with an arduino by tacking on to the built-in Ethernet library. Feel free to browse the source code to see how they are called and parsed. An overview of all the available web services can be found [here](http://bizeocloudws.cloudapp.net/PublicWS.asmx).
 
 This library implements all available HTTP methods (GET, POST and SOAP). If the web service functions are called without specifying which method to use, the GET method is used. This is because it sends and receives the least amount of data, so can speed up web interaction.
 
@@ -67,27 +67,13 @@ Occasionally, the internet requests may fail. This can be due to an unplugged wi
 
 ````c
 int begin()
-````
-
-Initializes the Bizeo class and ethernet shield with default MAC address (DE:AD:BE:EF:FE:00).
-
-##### *Input*
-&nbsp;&nbsp;None
-
-##### *Output*
-* ``1`` -- Succeeded to initialize ethernet shield and obtain IP address
-* ``0`` -- Failed to initialize ethernet
-<br><br>
-
---------------------------------
-
-````c
 int begin(uint8_t *mac_address)
 ````
 
-Initializes the Bizeo class and ethernet shield with specified MAC address.
+Initializes the Bizeo library and ethernet shield. When no argument is given, it will use the default MAC address of ``DE:AD:BE:EF:FE:00``.
 
 ##### *Input*
+* ``NULL``  --  No argument
 * ``mac_address``  --  Pointer to an array of 6 bytes respresenting a mac address
 
 ##### *Output*
@@ -110,19 +96,24 @@ Sets the level of verbosity desired. Currently only values 0, 1, and 2 are imple
     * ``2``  --  Detailed (verbose) debug messages
 
 ##### *Output*
-&nbsp;&nbsp;None
+* ``void``  --  No output
 <br><br>
 
 --------------------------------
 
 ````c
 int getStatus(String userGuid)
+int getStatus(HTTP_METHOD method, String userGuid)
 ````
 
-When a valid user GUID is supplied, will return the current Bizeo status for that user. This function uses the default of HTTP GET request to consume the web service.
+When a valid user GUID is supplied, will return the current Bizeo status for that user. The ``method`` parameter is a custom enum (defined in the header file) representing the HTTP request method to use. When no method is given, the default of HTTP GET is used. This option is provided in case GET requests are ever disabled in the future and an alternate method needs to be used.
 
 ##### Input
 * ``userGuid``  -  Bizeo user GUID, which can be extracted from the url when browsing to the Bizeo status page in a browser
+* ``method``  --  HTTP request method to use for this web service call. Valid arguments are:
+    * ``GET``
+    * ``POST``
+    * ``SOAP``
 
 ##### Output
 * &nbsp;``0``  -  Green
@@ -136,52 +127,25 @@ When a valid user GUID is supplied, will return the current Bizeo status for tha
 --------------------------------
 
 ````c
-int getStatus(HTTP_METHOD method, String userGuid)
-````
-E.g: ``e.g. Bizeo.getStatus(POST, myGuid);``
-
-Get current Bizeo status, using the HTTP request method specified. GET is the fastest, but POST and SOAP are implemented as well. This may be useful if GET requests are ever disabled on the server in the future (they are sometimes less secure).
-
-##### Input
-* ``method  ``  --  Which HTTP request method to use for this web service call. Valid arguments are:
-    * ``GET``
-    * ``POST``
-    * ``SOAP``
-* ``userGuid``  --  See above
-
-##### Output
-&nbsp;&nbsp;See above
-<br><br>
-
---------------------------------
-
-````c
 int updateKpi(String kpiGuid, int value)
+int updateKpi(HTTP_METHOD method, String kpiGuid, int value)
 ````
 
-When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which will attempt to update the KPI with the new value. This function uses the default of HTTP GET request to consume the web service.
+When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which will attempt to update the KPI with the new value. Like the ``getStatus()`` function, there is an optional ``method`` parameter. When no method is given, the default of HTTP GET is used.
 
 ##### Input
 * ``kpiGuid``  --  Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings
 * ``value``  --  New integer KPI value
+* ``method``  --  HTTP request method to use for this web service call. Valid arguments are:
+    * ``GET``
+    * ``POST``
+    * ``SOAP``
 
 ##### Output
 * &nbsp;``0``  --  Success
 * ``-1``  --  Connection error
 * ``-2``  --  Invalid GUID
 * ``-3``  --  Unknown server response
-
-There is a variant available which allows the user to specify which HTTP request method to use. GET is the fastest, but POST and SOAP are implemented as well, in case GET requests are ever disabled in the future (they are sometimes less secure). The alternate function looks like this:
-
-````c
-int updateKpi(HTTP_METHOD method, String kpiGuid, int value)
-````
-
-The extra parameter ``method`` is a custom enum (defined in the header file) representing the HTTP request method to use.  
-Valid arguments are:
-* ``GET``
-* ``POST``
-* ``SOAP``
 <br><br>
 
 --------------------------------

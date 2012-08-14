@@ -9,10 +9,11 @@ You cannot use this library and the equivalent BizeoWiFly library at the same ti
 
 ## Todo
 * Create similar library for WiFly.
+* Include example code for internet retries and error checking.
 
 ## Installation
-Copy everything into the folder: "*<strong>ArduinoSketchbook</strong>*/libraries/BizeoEthernet"
-You may have to create the libraries folder. Default sketchbook location is in:
+Download the library as a zip (button above). Copy the folder inside the zip to your arduino libraries folder: "*<strong>...ArduinoSketchbook/libraries/</strong>*"
+You may have to create the libraries folder. Sketchbook location is set in the arduino IDE preferences. Default sketchbook locations are:
 
 * Windows: "My Documents\Arduino"
 * Mac: "~/Documents/Arduino"
@@ -59,9 +60,11 @@ int update = Bizeo.updateKpi(kpi_guid, new_value);
 
 Occasionally, the internet requests may fail. This can be due to an unplugged wire, an ISP malfunction, or even a server error. It is a good idea to always check the output of the web service functions to make sure they succeeded, and handle the errors when they don't (retry, give a warning, etc).
 
+Full examples can be seen in **File > Examples > BizeoEthernet**.
+
 ## Overview of Functions
 
-###### Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.
+###### Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value within the arduino environment.
 
 --------------------------------
 
@@ -74,7 +77,7 @@ Initializes the Bizeo library and ethernet shield. When no argument is given, it
 
 ##### *Input*
 * ``NULL``  --  No argument
-* ``mac_address``  --  Pointer to an array of 6 bytes respresenting a mac address
+* ``mac_address``  --  Pointer to an array of 6 bytes respresenting a mac address (see [usage](https://github.com/tobylockley/BizeoEthernet#usage))
 
 ##### *Output*
 * ``1``  --  Succeeded to initialize ethernet shield and obtain IP address
@@ -106,22 +109,22 @@ int getStatus(String userGuid)
 int getStatus(HTTP_METHOD method, String userGuid)
 ````
 
-When a valid user GUID is supplied, will return the current Bizeo status for that user. The ``method`` parameter is a custom enum (defined in the header file) representing the HTTP request method to use. When no method is given, the default of HTTP GET is used. This option is provided in case GET requests are ever disabled in the future and an alternate method needs to be used.
+When a valid user GUID is supplied, will return the current Bizeo status for that user. The optional ``method`` parameter is a custom enum (defined in the header file) representing the HTTP request method to use. When no method is given, the default of HTTP GET is used. This option is provided in case GET requests are ever disabled in the future and an alternate method needs to be used.
 
 ##### Input
-* ``userGuid``  -  Bizeo user GUID, which can be extracted from the url when browsing to the Bizeo status page in a browser
+* ``userGuid``  --  Bizeo user GUID, which can be extracted from the url when browsing to the Bizeo status page in a browser
 * ``method``  --  HTTP request method to use for this web service call. Valid arguments are:
     * ``GET``
     * ``POST``
     * ``SOAP``
 
 ##### Output
-* &nbsp;``0``  -  Green
-* &nbsp;``1``  -  Yellow
-* &nbsp;``2``  -  Red
-* ``-1``  -  Connection error
-* ``-2``  -  Invalid GUID
-* ``-3``  -  Unknown server response
+* &nbsp;``0``  --  Green
+* &nbsp;``1``  --  Yellow
+* &nbsp;``2``  --  Red
+* ``-1``  --  Connection error
+* ``-2``  --  Invalid GUID
+* ``-3``  --  Unknown server response
 <br><br>
 
 --------------------------------
@@ -135,14 +138,14 @@ When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which 
 
 ##### Input
 * ``kpiGuid``  --  Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings
-* ``value``  --  New integer KPI value
+* ``value``  --  New KPI value
 * ``method``  --  HTTP request method to use for this web service call. Valid arguments are:
     * ``GET``
     * ``POST``
     * ``SOAP``
 
 ##### Output
-* &nbsp;``0``  --  Success
+* &nbsp;``\ 0``  --  Success
 * ``-1``  --  Connection error
 * ``-2``  --  Invalid GUID
 * ``-3``  --  Unknown server response

@@ -32,7 +32,7 @@ public:
     BizeoClass() { _debugLevel = 0; }
     int begin();
     int begin(uint8_t *mac_address);
-    void setDebugLevel(unsigned int level);
+    void setDebugLevel(int level);
     // Main usage functions. When no HTTP_METHOD is specified,
     // the default is to use GET
     int getStatus(String userGuid);

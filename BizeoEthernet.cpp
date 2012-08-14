@@ -33,7 +33,7 @@ int BizeoClass::begin(uint8_t *macAddress)
     return test;
 }
 
-void BizeoClass::setDebugLevel(unsigned int level)
+void BizeoClass::setDebugLevel(int level)
 {
     _debugLevel = level;
 }

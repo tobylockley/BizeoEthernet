@@ -41,7 +41,7 @@ void setup()
 If more than one arduino are being used on the network, specify  MAC address with:
 
 ````c
-<span class="kt">byte</span> mac_address[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x02 };
+byte mac_address[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x02 };
 
 if (!Bizeo.begin(mac_address)) {
     // Handle failure
@@ -58,7 +58,7 @@ Bizeo.updateKpi(kpi_guid, new_value);
 
 ## Overview of Functions
 
-**Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.**
+###### *Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.*
 <br><br>
 
 --------------------------------
@@ -72,8 +72,8 @@ Initializes the bizeo class and ethernet shield with default MAC address (DE:AD:
 ##### *Input*
 &nbsp;  None
 ##### *Output*
-* &nbsp;1 &nbsp;-&nbsp; Succeeded to initialize ethernet shield and obtain IP address
-* &nbsp;0 &nbsp;-&nbsp; Failed to initialize ethernet
+* &nbsp;1 -- Succeeded to initialize ethernet shield and obtain IP address
+* &nbsp;0 -- Failed to initialize ethernet
 <br><br>
 
 --------------------------------
@@ -85,11 +85,11 @@ int begin(uint8_t *mac_address)
 Initializes the bizeo class and ethernet shield with specified MAC address.
 
 ##### *Input*
-* Pointer to an array of 6 bytes corresponding to a mac address
+* &nbsp;mac_address -- Pointer to an array of 6 bytes corresponding to a mac address
 
 ##### *Output*
-* &nbsp;1  -  Succeeded to initialize ethernet shield and obtain IP address
-* &nbsp;0  -  Failed to initialize ethernet
+* &nbsp;1 - Succeeded to initialize ethernet shield and obtain IP address
+* &nbsp;0 - Failed to initialize ethernet
 <br><br>
 
 --------------------------------
@@ -101,9 +101,9 @@ void setDebugLevel(unsigned int level)
 Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the given value.
 
 ##### *Input*
-&nbsp; Desired verbosity level
-* &nbsp;0  -  No debug output
-* &nbsp;1  -  Light debug messages
+* &nbsp;Desired verbosity level
+    * &nbsp;0  -  No debug output
+    * &nbsp;1  -  Light debug messages
 * &nbsp;2  -  Detailed (verbose) debug messages
 
 ##### *Output*
@@ -123,12 +123,12 @@ When a valid GUID is supplied, will return the current Bizeo status for the corr
 
 ##### *Output*
 &nbsp; Integer value corresponding to bizeo status or error code.
-* &nbsp;0  -  Green
-* &nbsp;1  -  Yellow
-* &nbsp;2  -  Red
-* -1  -  Connection error
-* -2  -  Invalid GUID
-* -3  -  Unknown server response
+* &nbsp;0  --  Green
+* &nbsp;1  --  Yellow
+* &nbsp;2  --  Red
+* -1  --  Connection error
+* -2  --  Invalid GUID
+* -3  --  Unknown server response
 <br><br>
 
 --------------------------------

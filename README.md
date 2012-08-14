@@ -84,6 +84,7 @@ int begin(uint8_t *mac_address)
 </pre>
   </dd>
 </dl>
+  
 
 --------------------------------
 
@@ -93,10 +94,10 @@ int begin(uint8_t *mac_address)
 
 *Initializes the bizeo class and ethernet shield with specified MAC address.*
 
-#####Input:
-* Pointer to an array of 6 bytes corresponding to a mac address, e.g: `` byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0x01 }; ``
+#####*Input*
+* Pointer to an array of 6 bytes corresponding to a mac address
 
-#####Output:
+#####*Output*
 * 1 - Succeeded to initialize ethernet shield and obtain IP address
 * 0 - Failed to initialize ethernet
 
@@ -109,12 +110,14 @@ void setDebugLevel(unsigned int level)
 *Sets the level of verbosity desired. Currently only values 0, 1, and 2 are implemented, but larger values will not cause errors, simply allow debug levels up to and including the given value.*
 
 ######*Input*
-* 0 - No debug output
-* 1 - Light debug messages
-* 2 - Detailed (verbose) debug messages
+&nbsp; Desired verbosity level
+* &nbsp; 0 - No debug output
+* &nbsp; 1 - Light debug messages
+* &nbsp; 2 - Detailed (verbose) debug messages
 
 ######*Output*
-* None
+* None  
+  
 
 --------------------------------
 
@@ -129,12 +132,13 @@ When a valid GUID is supplied, will return the current Bizeo status for the corr
 
 ######*Output*
 &nbsp; &nbsp; Integer value corresponding to bizeo status or error code.
-* &nbsp;0 = Green
-* &nbsp;1 = Yellow
-* &nbsp;2 = Red
-* -1 = Connection error
-* -2 = Invalid GUID
-* -3 = Unknown server response  
+* &nbsp; 0 -> Green
+* &nbsp; 1 -> Yellow
+* &nbsp; 2 -> Red
+* -1 -> Connection error
+* -2 -> Invalid GUID
+* -3 -> Unknown server response
+  
 
 --------------------------------
 
@@ -147,16 +151,11 @@ int updateKpi(String kpiGuid, int value)
   <dt>Input</dt>
   <dd>Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.</dd>
   <dt>Output</dt>
-  <dd>
-  Integer value corresponding to success or error code.
-<pre>
-  0 = Success
- -1 = Connection error
- -2 = Invalid GUID
- -3 = Unknown server response
-</pre>
-  </dd>
-</dl>
+&nbsp; Integer value corresponding to success or error code.
+* &nbsp; 0 > Success
+* -1 > Connection error
+* -2 > Invalid GUID
+* -3 > Unknown server response
 
 --------------------------------
 

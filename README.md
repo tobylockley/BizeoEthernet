@@ -138,7 +138,7 @@ When a valid GUID is supplied, will return the current Bizeo status for the corr
 * -1 -> Connection error
 * -2 -> Invalid GUID
 * -3 -> Unknown server response
-<br>
+<br><br><br>
 
 --------------------------------
 

@@ -59,22 +59,21 @@ Bizeo.updateKpi(kpi_guid, new_value);
 ## Overview of Functions
 
 **Note: Some return values differ from what is returned by the web service. This is to provide consistency between the functions and provide a more meaningful return value (i.e. less than zero = error) within the arduino environment.**
-<br>
+<br><br>
 
 --------------------------------
 
 ````c
 int begin()
-int begin(uint8_t *mac_address)
 ````
 
 Initializes the bizeo class and ethernet shield with default MAC address (DE:AD:BE:EF:FE:00).
 
-##### Input
+##### *Input*
 &nbsp;  None
-##### Output
-* &nbsp;1  -  Succeeded to initialize ethernet shield and obtain IP address
-* &nbsp;0  -  Failed to initialize ethernet
+##### *Output*
+* &nbsp;1 &nbsp;-&nbsp; Succeeded to initialize ethernet shield and obtain IP address
+* &nbsp;0 &nbsp;-&nbsp; Failed to initialize ethernet
 <br><br>
 
 --------------------------------
@@ -85,7 +84,7 @@ int begin(uint8_t *mac_address)
 
 Initializes the bizeo class and ethernet shield with specified MAC address.
 
-#####*Input*
+##### *Input*
 * Pointer to an array of 6 bytes corresponding to a mac address
 
 ##### *Output*
@@ -108,7 +107,7 @@ Sets the level of verbosity desired. Currently only values 0, 1, and 2 are imple
 * &nbsp;2  -  Detailed (verbose) debug messages
 
 ##### *Output*
-* None  
+* None
 <br><br>
 
 --------------------------------
@@ -123,7 +122,7 @@ When a valid GUID is supplied, will return the current Bizeo status for the corr
 &nbsp; Bizeo user GUID, which can be extracted from the url when browsing to the bizeo status page in a browser.
 
 ##### *Output*
-&nbsp;  Integer value corresponding to bizeo status or error code.
+&nbsp; Integer value corresponding to bizeo status or error code.
 * &nbsp;0  -  Green
 * &nbsp;1  -  Yellow
 * &nbsp;2  -  Red
@@ -138,7 +137,7 @@ When a valid GUID is supplied, will return the current Bizeo status for the corr
 int updateKpi(String kpiGuid, int value)
 ````
 
-*When a valid KPI GUID and value are supplied, the server will attempt to update the database with the new value.*
+When a valid KPI GUID is supplied, a request is sent to the Bizeo server, which will attempt to update the KPI with the new value.
 
 ##### *Input*
 &nbsp; Bizeo external KPI GUID, which can be found by browsing to an external KPI in your browser, and clicking on settings.</dd>

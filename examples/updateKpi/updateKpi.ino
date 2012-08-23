@@ -43,20 +43,22 @@ void setup()
   // The others are included in case GET does not work,
   // or is disabled in future server revisions
 
-  Serial.println("\r\nCalling Bizeo.getStatus() with GET method...");
+  Serial.print("\r\nCalling Bizeo.getStatus() with GET method...");
   updatestatus = Bizeo.updateKpi(KPI_GUID, 100);
-  Serial.print("int returned: ");
+  Serial.print("returned: ");
   Serial.println(updatestatus);
 
-  Serial.println("\r\nCalling Bizeo.getStatus() with POST method...");
+  Serial.print("\r\nCalling Bizeo.getStatus() with POST method...");
   updatestatus = Bizeo.getStatus(POST, KPI_GUID, 200);
-  Serial.print("int returned: ");
+  Serial.print("returned: ");
   Serial.println(updatestatus);
 
-  Serial.println("\r\nCalling Bizeo.getStatus() with SOAP method...");
+  Serial.print("\r\nCalling Bizeo.getStatus() with SOAP method...");
   updatestatus = Bizeo.getStatus(SOAP, KPI_GUID, 300);
-  Serial.print("int returned: ");
+  Serial.print("returned: ");
   Serial.println(updatestatus);
+  
+  Serial.println(F("\r\n### END ###"));
 }
 
 

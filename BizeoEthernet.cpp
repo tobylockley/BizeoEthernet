@@ -166,15 +166,25 @@ int BizeoClass::getStatus(HTTP_METHOD method, String guid)
 
 int BizeoClass::updateKpi(String guid, int value)
 {
+    return updateKpi(GET, guid, String(value));
+}
+
+int BizeoClass::updateKpi(String guid, String value)
+{
     return updateKpi(GET, guid, value);
 }
 
 int BizeoClass::updateKpi(HTTP_METHOD method, String guid, int value)
 {
+    return updateKpi(method, guid, String(value));
+}
+
+int BizeoClass::updateKpi(HTTP_METHOD method, String guid, String value)
+{
     /* Invokes Bizeo web service to update an external KPI.
      */
 
-    unsigned int length = guid.length() + String(value).length();  // Used for content length of POST requests
+    unsigned int length = guid.length() + value.length();  // Used for content length of POST requests
     String response;  // Store the response from the web server, ready for analysis
     int returnVal = -10;  // This function should never return -10
 

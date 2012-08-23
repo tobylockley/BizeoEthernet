@@ -15,7 +15,7 @@ void setup()
   Serial.begin(9600);
   delay(1000);
 
-  Serial.println(F(""));
+  Serial.println();
   Serial.println(F("# BIZEO EXAMPLE"));
   Serial.println(F("# Connection: Ethernet"));
   Serial.println(F("# Function: getStatus()"));
@@ -27,7 +27,7 @@ void setup()
   Serial.println(F("# -1 = Connection error"));
   Serial.println(F("# -2 = Invalid GUID"));
   Serial.println(F("# -3 = Unknown error"));
-  Serial.println(F(""));
+  Serial.println();
 
   Serial.println(F("Initializing ethernet..."));
   if (!Bizeo.begin(mac)) {
@@ -45,20 +45,22 @@ void setup()
   // The others are included in case GET does not work,
   // or is disabled in future server revisions
 
-  Serial.println("\r\nCalling Bizeo.getStatus() with GET method...");
+  Serial.print(F("\r\nCalling Bizeo.getStatus() with GET method..."));
   bizeostatus = Bizeo.getStatus(USER_GUID);
-  Serial.print("int returned: ");
+  Serial.print(F("returned: "));
   Serial.println(bizeostatus);
 
-  Serial.println("\r\nCalling Bizeo.getStatus() with POST method...");
+  Serial.print(F("\r\nCalling Bizeo.getStatus() with POST method..."));
   bizeostatus = Bizeo.getStatus(POST, USER_GUID);
-  Serial.print("int returned: ");
+  Serial.print(F("returned: "));
   Serial.println(bizeostatus);
 
-  Serial.println("\r\nCalling Bizeo.getStatus() with SOAP method...");
+  Serial.print("\r\nCalling Bizeo.getStatus() with SOAP method..."));
   bizeostatus = Bizeo.getStatus(SOAP, USER_GUID);
-  Serial.print("int returned: ");
+  Serial.print("returned: "));
   Serial.println(bizeostatus);
+  
+  Serial.println(F("\r\n### END ###"));
 }
 
 

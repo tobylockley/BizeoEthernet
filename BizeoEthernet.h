@@ -38,7 +38,9 @@ public:
     int getStatus(String userGuid);
     int getStatus(HTTP_METHOD method, String userGuid);
     int updateKpi(String kpiGuid, int value);
+    int updateKpi(String kpiGuid, String value);
     int updateKpi(HTTP_METHOD method, String kpiGuid, int value);
+    int updateKpi(HTTP_METHOD method, String kpiGuid, String value);
 };
 
 extern BizeoClass Bizeo;  // For use as global object

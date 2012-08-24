@@ -5,7 +5,7 @@ This library takes away all the hassle of working with the Bizeo web services wi
 
 This library implements all available HTTP methods (GET, POST and SOAP). If the web service functions are called without specifying which method to use, the GET method is used. This is because it sends and receives the least amount of data, so can speed up web interaction.
 
-You cannot use this library and the equivalent BizeoWiFly library at the same time. You can use other ethernet clients, but the Bizeo library declares one on creation, so there will only be 3 available for general use.
+You cannot use this library and the equivalent [BizeoWiFly](https://github.com/tobylockley/BizeoWiFly) library at the same time. You can use other ethernet clients, but the Bizeo library declares one on creation, so there will only be 3 available for general use.
 
 ## Todo
 * Create similar library for WiFly.

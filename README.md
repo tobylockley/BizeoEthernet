@@ -8,7 +8,6 @@ This library implements all available HTTP methods (GET, POST and SOAP). If the 
 You cannot use this library and the equivalent [BizeoWiFly](https://github.com/tobylockley/BizeoWiFly) library at the same time. You can use other ethernet clients, but the Bizeo library declares one on creation, so there will only be 3 available for general use.
 
 ## Todo
-* Create similar library for WiFly.
 * Include example code for internet retries and error checking.
 
 ## Installation
